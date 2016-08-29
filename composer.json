@@ -1,0 +1,17 @@
+{
+	 "name": "genie/genie",
+    "authors": [
+        {
+            "name": "Md Adil",
+            "email": "md-adil@live.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Genie\\": "src/Framework/"
+        }
+    },
+	 "require-dev": {
+	 	 "phpunit/phpunit": "^5.5"
+	 }
+}
