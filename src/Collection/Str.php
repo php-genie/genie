@@ -50,10 +50,10 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 		foreach($attrs as $attr => $val) {
 			$attribute .= " {$attr}=\"{$val}\"";
 		}
-		return new static("<{$element}{$attribute}>$this->var</{$element}>");
+		return new static("<{$element}{$attribute}>{$this->var}</{$element}>");
 	}
 
-	public function json($array = false) {
+	public function fromJson($array = false) {
 		if($array) {
 			return new Arr(json_decode($this->var, true));
 		}
@@ -78,11 +78,10 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 	}
 
 	// Doctrine Inflector
-	
-	
-	public function camelCase() {
+	public function camel() {
 		return new static(Inflector::camelize($this->var));
 	}
+
 	public function ucwords($delimiters = " \n\t\r\0\x0B-") {
 		return new static(Inflector::ucwords($this->var, $delimiters));
 	}
@@ -93,330 +92,6 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 		return new static(Inflector::singularize($this->var));
 	}	
 	// End Doctrine Inflector
-
-	// Regex functions
-	public function filter() {
-
-	}
-
-	public function grep() {
-
-	}
-
-	public function preg_last_error() {
-
-	}
-	
-	public function preg_match_all($pattern, $subject, $matches) {
-
-	}
-	
-	public function match($pattern, $subject) {
-
-	}
-	
-	public function quote($str) {
-
-	}
-	
-	public function preg_replace_callback($pattern, $callback, $subject) {
-		
-	}
-	
-	public function preg_replace_callback_array($pattern, $callback, $subject) {
-
-	}
-	
-	public function callback() {
-
-	}
-	
-	public function split($pattern, $subject) {
-
-	}
-
-	/*
-	public function addslashes($char = null) {
-		$this->var = addcslashes($this->var, $char);
-		return $this;
-	}
-
-	public function bin2hex() {
-
-	}
-
-	public function chop() {
-
-	}
-
-	public function chr() {
-
-	}
-	public function chunk_split() {
-
-	}
-	public function convert_cyr_string() {
-
-	}
-	public function convert_uudecode() {
-
-	}
-	public function convert_uuencode() {
-
-	}
-	public function count_chars() {
-
-	}
-	public function crc32() {
-
-	}
-	public function crypt() {
-
-	}
-
-	public function fprintf() {
-
-	}
-
-	public function get_html_translation_table() {
-
-	}
-
-	public function hebrev() {
-
-	}
-	public function hebrevc() {
-
-	}
-	public function hex2bin() {
-
-	}
-	public function html_entity_decode() {
-
-	}
-	public function htmlentities() {
-
-	}
-	public function htmlspecialchars_decode() {
-
-	}
-	public function htmlspecialchars() {
-
-	}
-
-	public function lcfirst() {
-
-	}
-	public function levenshtein() {
-
-	}
-	public function localeconv() {
-
-	}
-	public function ltrim() {
-
-	}
-	
-	
-	public function metaphone() {
-
-	}
-	public function money_format() {
-
-	}
-	public function nl_langinfo() {
-
-	}
-	public function nl2br() {
-
-	}
-	public function number_format() {
-
-	}
-	public function ord() {
-
-	}
-	public function parse_str() {
-
-	}
-	public function printf() {
-
-	}
-	public function quoted_printable_decode() {
-
-	}
-	public function quoted_printable_encode() {
-
-	}
-	public function quotemeta() {
-
-	}
-	public function rtrim() {
-
-	}
-	public function setlocale() {
-
-	}
-	public function sha1() {
-
-	}
-	public function sha1_file() {
-
-	}
-	public function similar_text() {
-
-	}
-	public function soundex() {
-
-	}
-	public function sprintf() {
-
-	}
-	public function sscanf() {
-
-	}
-	public function str_getcsv() {
-
-	}
-	public function str_ireplace() {
-
-	}
-	public function str_pad() {
-
-	}
-	public function str_repeat() {
-
-	}
-	public function str_replace() {
-
-	}
-	public function str_rot13() {
-
-	}
-	public function str_shuffle() {
-
-	}
-	public function str_split() {
-
-	}
-	public function str_word_count() {
-
-	}
-	public function strcasecmp() {
-
-	}
-	public function strchr() {
-
-	}
-	public function strcmp() {
-
-	}
-	public function strcoll() {
-
-	}
-	public function strcspn() {
-
-	}
-	public function strip_tags() {
-
-	}
-	public function stripcslashes() {
-
-	}
-	public function stripslashes() {
-
-	}
-	public function stripos() {
-
-	}
-	public function stristr() {
-
-	}
-	
-	public function strnatcasecmp() {
-
-	}
-	public function strnatcmp() {
-
-	}
-	public function strncasecmp() {
-
-	}
-	public function strncmp() {
-
-	}
-	public function strpbrk() {
-
-	}
-	public function strpos() {
-
-	}
-	public function strrchr() {
-
-	}
-	public function strrev() {
-
-	}
-	public function strripos() {
-
-	}
-	public function strrpos() {
-
-	}
-	public function strspn() {
-
-	}
-	public function strstr() {
-
-	}
-	public function strtok() {
-
-	}
-	public function strtolower() {
-
-	}
-	public function strtoupper() {
-
-	}
-	public function strtr() {
-
-	}
-	public function substr() {
-
-	}
-	public function substr_compare() {
-
-	}
-	public function substr_count() {
-
-	}
-	public function substr_replace() {
-
-	}
-	public function trim() {
-		$this->var = trim($this->var);
-		return $this;
-	}
-
-	public function ucfirst() {
-		$this->var = ucfirst($this->var);
-		return $this;
-	}
-
-	
-	public function vfprintf() {
-
-	}
-	public function vprintf() {
-
-	}
-	public function vsprintf() {
-
-	}
-	public function wordwrap() {
-
-	}
-	*/
 
 	// Inspired by JAVASCRIPT
 
@@ -430,45 +105,10 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 		return new static($this->var . $concater . implode($concater, $args));
 	}
 	
-	public function indexOf() {
-		
+	public function indexOf($value) {
+		return strpos($this->var, $value);
 	}
 
-	public function lastIndexOf() {
-		
-	}
-
-	public function search() {
-		
-	}
-
-	public function slice() {
-		
-	}
-
-	public function substring() {
-		
-	}
-
-	public function toLocaleLowerCase() {
-		
-	}
-
-	public function toLocaleUpperCase() {
-		
-	}
-
-	public function toLowerCase() {
-		
-	}
-	
-	public function toUpperCase() {
-		
-	}
-
-	public function valueOf() {
-		
-	}
 	
 	public function fixed() {
 		
@@ -623,7 +263,7 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 	 * @param  string  $delimiter
 	 * @return string
 	 */
-	public function snakeCase($delimiter = '_')
+	public function snake($delimiter = '_')
 	{
 		$value = $this->var;
 		$key = $value.$delimiter;
@@ -665,7 +305,7 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 	 * @param  string  $value
 	 * @return string
 	 */
-	public function studlyCase()
+	public function studly()
 	{
 		$key = $value = $this->var;
 
@@ -698,11 +338,11 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 	}
 
 	public function serialize() {
-
+		return serialize($this->var);
 	}
 
 	public function unserialize($str) {
-
+		return unserialize($this->var);
 	}
 	// Array 
 	public function getIterator() {
@@ -725,10 +365,6 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 		unset($this->var[$key]);
 	}
 
-	public function get() {
-		return self::$extends;
-	}
-
 	public function __debugInfo() {
 		return ['string' => $this->var, 'length' => strlen($this->var)];
 	}
@@ -741,6 +377,6 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 			$args[] = $this->var;
 			return $this->parse(call_user_func_array($fn, $args));
 		}
-		throw new UndefinedFunctionException("Call to undefined function", 1);
+		throw new Exception\UndefinedException("Call to undefined function", 1);
 	}
 }

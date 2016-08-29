@@ -12,7 +12,8 @@ class Iterator extends Core implements \Iterator {
 
 	// Array iterator
 	protected $var;
-	function __construct(static $var) {
+
+	function __construct($var) {
 		$this->var = $var;
 	}
 

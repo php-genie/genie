@@ -15,7 +15,6 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 	}
 
 	// Custom methods
-
 	public function join($delimeter) {
 		return new Str(implode($delimeter, $this->var));
 	}
@@ -55,260 +54,33 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 	}
 
 	// Core functions
-	public function json() {
+	public function toJson() {
 		return new Str(json_encode($this->var));
 	}
 	
-	public function change_case() {
-
+	public function toArray() {
+		return $this->var;
 	}
 
-	public function chunk() {
-
-	}
-
-	public function column() {
-
-	}
-
-	public function combine() {
-
-	}
-	public function count_values() {
-
-	}
-
-	public function diff() {
-
-	}
-
-	public function diff_assoc() {
-
-	}
-
-	public function diff_key() {
-
-	}
-
-	public function diff_uassoc() {
-
-	}
-
-	public function diff_ukey() {
-
-	}
-
-	public function fill() {
-
-	}
-	public function fill_keys() {
-
-	}
-
-	public function filter() {
-
-	}
-
-	public function flip() {
-
-	}
-
-	public function intersect() {
-
-	}
-
-	public function intersect_assoc() {
-
-	}
-
-	public function intersect_key() {
-
-	}
-
-	public function intersect_uassoc() {
-
-	}
-
-	public function intersect_ukey() {
-
-	}
-
-	public function key_exists() {
-
-	}
-	
-	public function keys() {
-
-	}
-
-	public function merge() {
-
-	}
-	public function merge_recursive() {
-
-	}
-	public function multisort() {
-
-	}
-	public function pad() {
-
-	}
 	public function pop() {
-
+		return $this->parse(array_pop($this->var));
 	}
-	public function product() {
 
+	public function push($var) {
+		array_push($this->var, $var);
+		return $this->parse($var);
 	}
-	public function push() {
 
-	}
 	public function rand() {
-
-	}
-	public function reduce() {
-
-	}
-	public function replace() {
-
-	}
-	public function replace_recursive() {
-
-	}
-	public function reverse() {
-
-	}
-	public function search() {
-
-	}
-	public function shift() {
-
-	}
-	public function slice() {
-
-	}
-	public function splice() {
-
-	}
-	public function sum() {
-
-	}
-	public function udiff() {
-
-	}
-	public function udiff_assoc() {
-
-	}
-	public function udiff_uassoc() {
-
-	}
-	public function uintersect() {
-
-	}
-	public function uintersect_assoc() {
-
-	}
-	public function uintersect_uassoc() {
-
-	}
-	public function unique() {
-
-	}
-	public function unshift() {
-
-	}
-	public function values() {
-
-	}
-	public function walk() {
-
-	}
-	public function walk_recursive() {
-
-	}
-	public function arsort() {
-
-	}
-	public function asort() {
-
-	}
-	public function compact() {
-
+		$array = $this->var;
+		return new static(array_rand($array));
 	}
 
-	
-	public function end() {
-
-	}
-	public function extract() {
-
-	}
-	public function in_array() {
-
+	public function indexOf($index) {
+		return array_search($index, $this->var);
 	}
 	
-	public function krsort() {
-
-	}
-	public function ksort() {
-
-	}
-	public function lists() {
-
-	}
-	public function natcasesort() {
-
-	}
-	public function natsort() {
-
-	}
 	
-	public function pos() {
-
-	}
-	public function prev() {
-
-	}
-	public function range() {
-
-	}
-	public function reset() {
-
-	}
-	public function rsort() {
-
-	}
-	public function shuffle() {
-
-	}
-	public function sizeof() {
-
-	}
-
-	public function uasort() {
-
-	}
-	public function uksort() {
-
-	}
-	public function usort() {
-
-	}
-
-	// Inspired by JAVASCRIPT
-	public function concat() {
-		
-	}
-	public function indexOf() {
-		
-	}
-	
-	public function lastIndexOf() {
-		
-	}
-
-	public function valueOf() {
-		
-	}
 
 	// laravel helper functions
 
@@ -342,33 +114,7 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 		return new static(array(array_keys($this->var), array_values($this->var)));
 	}
 
-	/**
-	 * Flatten a multi-dimensional associative array with dots.
-	 *
-	 * @param  array   $array
-	 * @param  string  $prepend
-	 * @return array
-	 */
-	public function dot($prepend = '')
-	{
-		$array = $this->var;
-		$results = array();
-
-		foreach ($array as $key => $value)
-		{
-			if (is_array($value))
-			{
-				$results = array_merge($results, $this->dot($prepend.$key.'.'));
-			}
-			else
-			{
-				$results[$prepend.$key] = $value;
-			}
-		}
-
-		return new static($results);
-	}
-
+	
 	/**
 	 * Get all of the given array except for a specified array of items.
 	 *
@@ -376,37 +122,9 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 	 * @param  array|string  $keys
 	 * @return array
 	 */
-	public function except($keys)
+	public function except(array $keys)
 	{
 		return new static(array_diff_key($this->var, array_flip((array) $keys)));
-	}
-
-	/**
-	 * Fetch a flattened array of a nested array element.
-	 *
-	 * @param  array   $array
-	 * @param  string  $key
-	 * @return array
-	 */
-	public function fetch($key)
-	{
-		$array = $this->var;
-		foreach (explode('.', $key) as $segment)
-		{
-			$results = array();
-
-			foreach ($array as $value)
-			{
-				if (array_key_exists($segment, $value = (array) $value))
-				{
-					$results[] = $value[$segment];
-				}
-			}
-
-			$array = array_values($results);
-		}
-
-		return new static(array_values($results));
 	}
 
 	/**
@@ -425,7 +143,7 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 			if (call_user_func($callback, $key, $value)) return $this->parse($value);
 		}
 
-		return $default;
+		return $this->parse($default);
 	}
 
 	/**
@@ -439,21 +157,6 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 	public function last($array, $callback, $default = null)
 	{
 		return static::first(array_reverse($array), $callback, $default);
-	}
-
-	/**
-	 * Flatten a multi-dimensional array into a single level.
-	 *
-	 * @param  array  $array
-	 * @return array
-	 */
-	public function flatten($array)
-	{
-		$return = array();
-
-		array_walk_recursive($array, function($x) use (&$return) { $return[] = $x; });
-
-		return $return;
 	}
 
 	/**
@@ -555,41 +258,6 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 	}
 
 	/**
-	 * Pluck an array of values from an array.
-	 *
-	 * @param  array   $array
-	 * @param  string  $value
-	 * @param  string  $key
-	 * @return array
-	 */
-	public function pluck($value, $key = null)
-	{
-		$array = $this->var;
-		$results = array();
-
-		foreach ($array as $item)
-		{
-			$itemValue = is_object($item) ? $item->{$value} : $item[$value];
-
-			// If the key is "null", we will just append the value to the array and keep
-			// looping. Otherwise we will key the array using the value of the key we
-			// received from the developer. Then we'll return the final array form.
-			if (is_null($key))
-			{
-				$results[] = $itemValue;
-			}
-			else
-			{
-				$itemKey = is_object($item) ? $item->{$key} : $item[$key];
-
-				$results[$itemKey] = $itemValue;
-			}
-		}
-
-		return new static($results);
-	}
-
-	/**
 	 * Get a value from the array, and remove it.
 	 *
 	 * @param  array   $array
@@ -616,28 +284,28 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 	 */
 	public function set($key, $value)
 	{
-		if (is_null($key)) return $this->var = $value;
+		$array = &$this->var;
+		if (is_null($key)) {
+            return $array = $value;
+        }
 
-		$keys = explode('.', $key);
+        $keys = explode('.', $key);
+        while (count($keys) > 1) {
 
-		while (count($keys) > 1)
-		{
-			$key = array_shift($keys);
+            $key = array_shift($keys);
 
-			// If the key doesn't exist at this depth, we will just create an empty array
-			// to hold the next value, allowing us to create the arrays to hold final
-			// values at the correct depth. Then we'll keep digging into the array.
-			if ( ! isset($this->var[$key]) || ! is_array($this->var[$key]))
-			{
-				$this->var[$key] = array();
-			}
+            // If the key doesn't exist at this depth, we will just create an empty array
+            // to hold the next value, allowing us to create the arrays to hold final
+            // values at the correct depth. Then we'll keep digging into the array.
+            if (! isset($array[$key]) || ! is_array($array[$key])) {
+                $array[$key] = [];
+            }
 
-			$this->var = $this->var[$key];
-		}
-
-		$array[array_shift($keys)] = $value;
-
-		return $this;
+            $array = &$array[$key];
+        }
+        $array[array_shift($keys)] = $value;
+        
+        return new static($this->var);
 	}
 
 	/**
@@ -647,24 +315,25 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 	 * @param  \Closure  $callback
 	 * @return array
 	 */
-	public function sort($array, Closure $callback)
+	public function sort(Closure $callback)
 	{
-		return Collection::make($array)->sortBy($callback)->all();
+		$array = $this->var;
+		return new static(uasort($array, $callback));
 	}
 
 	// Magic Methods
-
 	public function __toString() {
 		return new Str(json_encode($this->var));
 	}
 	
 	public function serialize() {
-		
+		return serialize($this->var);
 	}
 
 	public function unserialize($serialized) {
-
+		return unserialize($this->var);
 	}
+
 	public function offsetGet($key) {
 		return $this->parse($this->var[$key]);
 	}
@@ -699,7 +368,7 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 	}
 
 	public function getIterator() {
-		return new Iterator(new static($this->var));
+		return new Iterator($this->var);
 	}
 
 	public function __call($fn, $args) {
@@ -710,7 +379,7 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 			$args[] = $this->var;
 			return $this->parse(call_user_func_array('array_' . $fn, $args));
 		}
-		throw new PQueryException("Call to undefined function {$fn}()", 404);
+		throw new Exception\UndefinedException("Call to undefined function {$fn}()", 404);
 	}
 	// End Magic Methods
 }

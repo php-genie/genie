@@ -544,7 +544,7 @@ class Collection implements ArrayAccess, ArrayableInterface, Countable, Iterator
 	 */
 	public function sort(Closure $callback)
 	{
-		uasort($this->items, $callback);
+		
 
 		return $this;
 	}

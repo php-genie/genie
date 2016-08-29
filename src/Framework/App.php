@@ -1,10 +1,11 @@
 <?php
+namespace Genie;
 use ReflectionClass;
 use ReflectionMethod;
 /**
 * 
 */
-class App extends \Slim\App;
+class App extends \Slim\App
 {
 	protected $container;
 
@@ -16,7 +17,7 @@ class App extends \Slim\App;
 
 		$this->container[$controller] = function($c) use($controller) {
 			return new $controller;
-		}
+		};
 
 		$this->bindRoutes($controller, $route);
 	}
@@ -35,7 +36,7 @@ class App extends \Slim\App;
 		}
 	}
 
-	public function addMiddleware($route, $classDoc, $methodDoc) {
+	public function addMiddlewares($route, $classDoc, $methodDoc) {
 		// $route->add()
 	}
 }
