@@ -323,7 +323,7 @@ class Arr extends Core implements \IteratorAggregate, \ArrayAccess, \Serializabl
 
 	// Magic Methods
 	public function __toString() {
-		return new Str(json_encode($this->var));
+		return json_encode($this->var);
 	}
 	
 	public function serialize() {

@@ -9,10 +9,13 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 	protected $var;
 	protected $allowed = [
 		'length', 'json', 'snake', 'camel', 'plural',
-		'singular', 'upper', 'lower'
+		'singular', 'upper', 'lower', 'studly'
 	];
 	
+	// caches
+
 	private static $snakeCache = [];
+	private static $studlyCache = [];
 
 	public static $extends = [];
 
@@ -73,8 +76,12 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 		return strlen($this->var);
 	}
 
+	public function empty() {
+		return empty((string)$this->var);
+	}
+
 	public function equal($str) {
-		return $this->var == (string)$str;
+		return (string)$this->var === (string)$str;
 	}
 
 	// Doctrine Inflector
@@ -85,16 +92,17 @@ class Str extends Core  implements \ArrayAccess, \IteratorAggregate, \JsonSerial
 	public function ucwords($delimiters = " \n\t\r\0\x0B-") {
 		return new static(Inflector::ucwords($this->var, $delimiters));
 	}
+
 	public function plural() {
 		return new static(Inflector::pluralize($this->var));
 	}
+	
 	public function singular() {
 		return new static(Inflector::singularize($this->var));
 	}	
 	// End Doctrine Inflector
 
 	// Inspired by JAVASCRIPT
-
 	public function concat() {
 		return new static($this->var . implode('', func_get_args()));
 	}

@@ -5,7 +5,7 @@ namespace Genie\Config;
 */
 class LoadConfig
 {
-	public function load($path) {
+	public static function load($path) {
 		$configs = [];
 		$baseName = glob($path . '/*.*');
 		foreach ($baseName as $key => $value) {
