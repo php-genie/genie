@@ -96,7 +96,7 @@ class UserController extends Controller {
 ```curl
 cur localhost/users/
 # users list
-... show on
+... so on ...
 ```
 
 
